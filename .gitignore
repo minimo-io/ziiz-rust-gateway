@@ -45,6 +45,7 @@ logs/**
 # .idea/modules
 # *.iml
 # *.ipr
+.env
 
 # CMake
 cmake-build-*/
