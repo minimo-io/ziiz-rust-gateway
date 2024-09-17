@@ -1,9 +1,5 @@
-.env
+#.env
 .dockerignore
 Dockerfile
 target/
 scripts/
-
-# minimo
-#.git
-#Cargo.lock
