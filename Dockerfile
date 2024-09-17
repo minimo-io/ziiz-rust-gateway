@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-cert
 WORKDIR /workspace
 
 COPY static static
-COPY .env ./
+# COPY .env ./
 # COPY settings settings
 
 # copy binary and configuration files

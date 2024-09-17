@@ -13,14 +13,15 @@ When re-generating entities let's remember to add the needed Serialize derive
 Build the thing
 `docker build -t ziiz .`
 
-Run it
-`docker run -p 5000:8080 [image_hash]`
+Run it with your local .env file
+`docker run -p 5000:8080 --env-file .env [image_hash]`
 
 ## To Do
 
 Reference: https://github.com/robatipoor/rustfulapi/tree/main
 
--   Use docker enviroment variables instead of copying .env
+-   Close database connection on exit
+-   Create the final structure for the project (or so)
 -   Create a docker compose pipeline
 -   Lean how to stress test
     -   Confirm that the database is handling multi-thread Arc<> stuff
