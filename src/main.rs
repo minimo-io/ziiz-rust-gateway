@@ -5,9 +5,11 @@ use std::env;
 use std::sync::Arc;
 use dotenv::dotenv;
 
+pub mod entity;
+
 // api endpoints
 use api::payin::pay;
-use api::data::countries;
+use api::data::all_countries;
 use api::home::home;
 
 
@@ -45,7 +47,7 @@ async fn main() -> std::io::Result<()> {
     }
 
     // Create shared state
-    let app_state = Arc::new(db);
+    // let app_state = Arc::new(db);
 
     // NOTE: This will be fired every time that Actix-web creates a new thread to handle a request
     // Shared resources must be placed above this line
@@ -54,15 +56,20 @@ async fn main() -> std::io::Result<()> {
 
         App::new()
         .wrap(logger)
-        // .app_data(Data::new(db.clone())) // Store the database connection to access in services
-        .app_data(Data::new(AppState {
-            db_pool: app_state.clone(),
-        }))        
+        .app_data(Data::new(db.clone())) // Store the database connection to access in services
+        // .app_data(Data::new(AppState {
+        //     db_pool: app_state.clone(),
+        // }))        
         .service(pay)
         .service(home)
-        .service(countries)
+        .service(all_countries)
     })
     .bind((app_server_addr.as_str(), app_server_port))?
     .run()
     .await
 }
+
+// CLOSE CONNECTION WHEN EXIT ???
+// let db = Database::connect(url).await?;
+// Closing connection here
+// db.close().await?;
