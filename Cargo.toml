@@ -7,6 +7,14 @@ homepage = "https://minimo.io"
 description = "RESTful API for ZiiZ built with Rust"
 edition = "2021"
 
+[lib]
+name = "ziiz"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ziiz"
+path = "src/main.rs"
+
 # [workspace]
 # members = [".", "src/entities"]
 

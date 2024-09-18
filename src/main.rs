@@ -1,16 +1,20 @@
-mod api;
+
+
 use actix_web::{get, web::Data, App, HttpServer, Responder, middleware::Logger, HttpResponse};
 use sea_orm::{Database, DbConn};
 use std::env;
 use std::sync::Arc;
 use dotenv::dotenv;
 
-pub mod entity;
+use ziiz::utils::date_utils::format_date;
+
+mod routes;
+pub mod entities; // export it for use among the app
 
 // api endpoints
-use api::payin::pay;
-use api::data::all_countries;
-use api::home::home;
+use routes::payin::pay;
+use routes::data::all_countries;
+use routes::home::home;
 
 
 #[derive(Clone)]
@@ -28,6 +32,8 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
 
 
+    // this enviroment handling should go to the config mod
+    // once that is done delete this
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set in enviroment");
     let app_server_addr = env::var("APP_SERVER__ADDR").expect("APP_SERVER__ADDR must be set in enviroment");
     let app_server_port = env::var("APP_SERVER__PORT").expect("APP_SERVER__PORT must be set in enviroment");

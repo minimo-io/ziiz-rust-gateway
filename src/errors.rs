@@ -1,0 +1,1 @@
+// Centralizes error definitions and handling, improving consistency in error management across the application.

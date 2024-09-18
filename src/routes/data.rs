@@ -3,7 +3,7 @@ use actix_web::{get, HttpResponse, Responder, web::Data};
 use sea_orm::entity::*;
 use sea_orm::prelude::*;
 
-use crate::entity::{prelude::*, *};
+use crate::entities::{prelude::*, *};
 
 #[get("/data/countries")]
 async fn all_countries(db: Data<DatabaseConnection>) -> impl Responder {
