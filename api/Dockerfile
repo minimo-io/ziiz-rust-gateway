@@ -18,13 +18,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-cert
 # create workspace directory
 WORKDIR /workspace
 
-COPY static static
+# COPY static static
 # COPY .env ./
 # COPY settings settings
 
 # copy binary and configuration files
 # COPY --from=builder /workspace/target/release/app .
-COPY --from=builder /workspace/target/release/ziiz-rust-gateway .
+COPY --from=builder /workspace/target/release/ziiz .
 
 # expose port
 EXPOSE 8080
@@ -35,4 +35,4 @@ ENV RUST_LOG=info
 
 # run the binary
 # ENTRYPOINT ["./app"]
-ENTRYPOINT ["./ziiz-rust-gateway"]
+ENTRYPOINT ["./ziiz"]

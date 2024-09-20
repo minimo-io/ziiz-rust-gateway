@@ -1,5 +1,14 @@
-.env
-.dockerignore
 Dockerfile
-target/
+#target/
 scripts/
+tests/
+
+node_modules
+target               
+Cargo.lock           # You generally only need Cargo.toml, not the lock file
+.dockerignore        # Exclude the .dockerignore itself
+.env                 # Exclude sensitive environment variables in development
+.git                 # Git directory is not needed inside the image
+.gitignore           # You don’t need this file in the image
+
+README.md

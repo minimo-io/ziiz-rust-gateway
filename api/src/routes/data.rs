@@ -9,8 +9,9 @@ use crate::entities::{prelude::*, *};
 async fn all_countries(db: Data<DatabaseConnection>) -> impl Responder {
 
     // query via SeaORM
-    // let result = Countries::find().all(&*db).await?;
-    let result = Countries::find().all(&**db).await;
+    // let result = Countries::find().all(&**db).await;
+    let result = Countries::find().all(db.as_ref()).await;
+    
 
     match result {
         Ok(records) => HttpResponse::Ok().json(records),

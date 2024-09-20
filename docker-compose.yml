@@ -1,0 +1,60 @@
+services:
+    api:
+        build:
+            context: ./api # Path to the API Dockerfile
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080" # Exposing the API on port 8080
+        env_file: # Load environment variables for the API
+            #            - .env # Use a shared .env at the root
+            - ./api/.env # (Optional) API-specific env vars
+        depends_on:
+            - redis # Ensure Redis starts before the API
+        networks:
+            - backend
+
+    redis:
+        image: redis:latest
+        volumes:
+            - redis_data:/data
+        ports:
+            - "6379:6379"
+        networks:
+            - backend
+
+    prometheus:
+        build:
+            context: ./monitoring/prometheus
+            dockerfile: Dockerfile
+        ports:
+            - "9090:9090"
+        volumes:
+            - prometheus_data:/prometheus # For persistent data
+            - ./monitoring/prometheus/prometheus.yml:/prometheus/prometheus.yml # Local config
+        networks:
+            - backend
+        command:
+            - "--config.file=/prometheus/prometheus.yml" # Path inside the container
+
+        # Grafana Monitoring
+    grafana:
+        build:
+            context: ./monitoring/grafana # Use the correct build context for your custom Dockerfile
+            dockerfile: Dockerfile # The Dockerfile inside ./monitoring/grafana
+        ports:
+            - "3000:3000"
+        volumes:
+            - grafana_data:/var/lib/grafana
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        depends_on:
+            - prometheus
+networks:
+    backend:
+        driver: bridge
+
+# Volumes for persistent storage
+volumes:
+    redis_data:
+    prometheus_data:
+    grafana_data:

@@ -1,32 +1,41 @@
-# ZiiZ Rust Gateway
+# ZiiZ Backend
 
-A modern, efficient and fast payment gateway built in Rust.
+A modern, efficient and fast payment gateway backend, with it's main API built in Rust for performance and safety, and a bunch of micro-services.
 
-## SeaORM entities
+## Project folder structure
 
-When re-generating entities let's remember to add the needed Serialize derive
-
-`sea-orm-cli generate entity -o src/entities --with-serde both`
-
-## Docker (manual for now)
-
-Build the thing
-`docker build -t ziiz .`
-
-Run it with your local .env file
-`docker run -p 5000:8080 --env-file .env [image_hash]`
-
-## To Do
-
-Reference: https://github.com/robatipoor/rustfulapi/tree/main
-
--   Continue creating the final structure for the project.
--   Create a config mod for the server: https://youtu.be/aZmrfizffL0?si=ysS0H7qZIa57hF2Y&t=520
--   Better app_state to share among the whole app: https://www.youtube.com/watch?v=ENgFBKTBqDU
--   Close database connection on exit
--   Create a docker compose pipeline
--   Lean how to stress test
-    -   Confirm that the database is handling multi-thread Arc<> stuff
--   Better share env variables
--   Documentation
--   Monitoring
+```
+ziiz-backend/
+│
+├── api/                            # Rust API microservice
+│   ├── src/
+│   ├── Cargo.toml
+│   ├── Dockerfile
+│   ├── .env
+│   └── README.md
+│
+├── exchange-rates/                 # Exchange rate service (either microservice or worker)
+│   ├── src/
+│   ├── Cargo.toml
+│   ├── Dockerfile
+│   ├── .env
+│   └── README.md
+│
+├── redis/                          # Redis config
+│   ├── redis.conf
+│   └── README.md
+│
+├── monitoring/                     # Monitoring tools (Prometheus + Grafana)
+│   ├── prometheus/
+│   │   ├── prometheus.yml
+│   │   └── Dockerfile
+│   │
+│   ├── grafana/
+│   │   └── Dockerfile
+│   └── README.md
+│
+├── docker-compose.yml              # Docker Compose config for local dev
+├── .env                            # Global environment variables for Docker Compose
+├── .gitignore
+└── README.md
+```
