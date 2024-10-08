@@ -7,11 +7,15 @@ struct ExchangeRate {
     valor: String,
 }
 
+/// Retrieves the latest BRL/USD exchange rate from the BCB API.
 async fn fetch_brl_usd_exchange_rate() -> Result<ExchangeRate, Error> {
+    // Define the URL for the BCB API endpoint that provides the exchange rates
     let url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.10813/dados?formato=json";
+
+    // Send a GET request to the API and await the response as JSON
     let response = reqwest::get(url).await?.json::<Vec<ExchangeRate>>().await?;
 
-    // Get the latest exchange rate (last element in the array)
+    // Extract the latest exchange rate from the response (the last element in the array)
     let latest_rate = response.last().unwrap().clone();
 
     Ok(latest_rate)
@@ -40,10 +44,10 @@ async fn main() {
 // async fn fetch_brl_usd_exchange_rate() -> Result<ExchangeRate, Error> {
 //     let url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.10813/dados?formato=json";
 //     let response = reqwest::get(url).await?.json::<Vec<ExchangeRate>>().await?;
-    
+
 //     // Get the latest exchange rate (last element in the array)
 //     let latest_rate = response.last().unwrap().clone();
-    
+
 //     Ok(latest_rate)
 // }
 
@@ -75,7 +79,7 @@ async fn main() {
 //             return; // Continue execution, but do not exit the program
 //         }
 //     };
-    
+
 //     // Try to fetch the latest exchange rate from Redis
 //     let rate_from_cache = get_exchange_rate_from_redis(&redis_client).await;
 
