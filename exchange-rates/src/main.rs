@@ -23,6 +23,7 @@ async fn fetch_brl_usd_exchange_rate() -> Result<ExchangeRate, Error> {
 
 #[tokio::main]
 async fn main() {
+    // Fetch and print the latest BRL/USD exchange rate from the BCB API
     match fetch_brl_usd_exchange_rate().await {
         Ok(rate) => println!("Date: {}, BRL/USD Rate: {}", rate.data, rate.valor),
         Err(err) => eprintln!("Error fetching exchange rate: {}", err),
