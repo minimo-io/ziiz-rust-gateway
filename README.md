@@ -1,6 +1,6 @@
 # ZiiZ Backend
 
-A modern, efficient and fast payment gateway backend, with it's main API built in Rust for performance and safety, and a bunch of micro-services.
+A modern, efficient and fast payment gateway backend, with it's main API built in Rust for performance and safety, and a bunch of micro-services..
 
 ## Project folder structure
 
